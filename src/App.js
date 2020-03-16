@@ -1,26 +1,53 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Navigation from './components/navigation'
+import Title from './components/title'
+import Content from './components/content'
+import Panier from './components/panier'
+import Button from './components/button'
+import React, { Component } from 'react';
+import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
+import "./App.css"
+import { withRouter } from 'react-router-dom'
+import { withAutorization, AutorizationProvider } from './Autorization'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+
+
+
+const Button2 = withAutorization(Button);
+
+
+
+class App extends Component{
+	render(){
+		return(
+			<AutorizationProvider>
+		<Router>
+			<div>
+			<Navigation/>
+		
+			<Switch>
+			  <Route exact path="/">
+					<Title/>	
+					<Content/>     
+			  </Route>
+	          <Route path="/connexion">
+	            	<Button2/>
+	          </Route>
+	          <Route path="/panier">
+	          	<Panier/>
+	          </Route>
+	          </Switch>
+	       </div>
+       	</Router>
+  	     	</AutorizationProvider>
+       		
+			
+		)
+	}
 }
+
+
+
+
 
 export default App;
